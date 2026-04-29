@@ -1,0 +1,19 @@
+{
+  "name": "rosa-parks",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-03-31",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [
+    {
+      "binding": "BETA_SIGNUPS_DB",
+      "database_name": "rosaparks-beta-signups",
+      "database_id": "40446be0-c8da-4174-aa7b-c2e127fe4ac5"
+    }
+  ],
+  "assets": {
+    "directory": "../landing/dist",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "not_found_handling": "single-page-application"
+  }
+}
