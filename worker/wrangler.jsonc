@@ -1,0 +1,33 @@
+{
+  "name": "rosa-parks-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-03-31",
+  "compatibility_flags": ["nodejs_compat"],
+  "account_id": "5e1b4d824d3c51f13d1dd06621146a00",
+  "workers_dev": false,
+  "routes": [
+    { "pattern": "rp.xj.is", "custom_domain": true }
+  ],
+  "d1_databases": [
+    {
+      "binding": "BETA_SIGNUPS_DB",
+      "database_name": "rosaparks-beta-signups",
+      "database_id": "7437dc3c-048d-496c-984f-c1fc6b30e59f"
+    },
+    {
+      "binding": "PARKING_DB",
+      "database_name": "rosaparks-beta-signups",
+      "database_id": "7437dc3c-048d-496c-984f-c1fc6b30e59f"
+    }
+  ],
+  // Hourly session cleanup — see the `scheduled` handler in src/index.ts.
+  // Off the top of the hour to avoid the :00 thundering herd.
+  "triggers": { "crons": ["17 * * * *"] },
+  "assets": {
+    "directory": "../landing/dist",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "not_found_handling": "none"
+  },
+  "observability": { "enabled": true }
+}
