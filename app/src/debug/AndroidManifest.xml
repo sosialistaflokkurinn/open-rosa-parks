@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Debug-only manifest overlay. Nothing here reaches a release build.
+
+  Two additions, both for the Blikk rail probe (BlikkTestScreen):
+
+  1. The `rosaparks://payment-complete` deep link. Blikk's partnerRedirectUrl
+     sends the payer back to this scheme with ?paymentId=<id> appended after
+     strong authentication, which is what hands them from their banking app
+     into ours. singleTop is what makes it a return rather than a relaunch —
+     without it the deep link would start a second MainActivity and the
+     probe screen would lose the payment it is watching. The paymentId query
+     parameter is not read: the screen is already polling that payment, so
+     the redirect only has to bring the app forward.
+
+  2. Cleartext traffic, so a debug build can talk to `wrangler dev` over the
+     LAN. The Blikk key lives on the developer machine only and never on the
+     deployed worker, which is what keeps payer data off Cloudflare.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application android:networkSecurityConfig="@xml/network_security_config">
+        <!--
+          android:exported is repeated from the main manifest rather than
+          inherited. Lint requires an explicit value on any component that
+          declares an intent filter, and the merged debug manifest declares
+          one here. The value is unchanged: MainActivity is the launcher and
+          was already exported.
+        -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="payment-complete"
+                    android:scheme="rosaparks" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

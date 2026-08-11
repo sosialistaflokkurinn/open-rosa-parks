@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Debug builds only (app/src/debug/), so this never relaxes anything in a
+  shipped app. It exists so a debug install can reach `wrangler dev` running
+  on a developer machine over the LAN, which is how the Blikk rail is probed
+  without putting a payment-minting endpoint on a live host.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>
